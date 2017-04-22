@@ -1,0 +1,26 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="au.edu.canberra.mt_a2_v2.MainActivity">
+    <item
+        android:id="@+id/action_normal"
+        android:title="@string/action_normal"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_hybrid"
+        android:title="@string/hybrid"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_satellite"
+        android:title="@string/action_satellite"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_terrain"
+        android:title="@string/action_terrain"
+        app:showAsAction="never"/>
+    <item
+        android:id="@+id/action_none"
+        android:title="@string/action_none"
+        app:showAsAction="never"/>
+
+</menu>
