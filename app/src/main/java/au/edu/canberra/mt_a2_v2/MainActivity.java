@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -178,7 +179,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             marker_Peg2.draggable(markerOps.draggable);
             marker_Peg2.flat(markerOps.flat);
 
-        final Marker newMarker = ucMap.addMarker(marker_StudentCenter);
+        ucMap.addMarker(marker_StudentCenter);
         ucMap.addMarker(marker_CoffeeGrounds);
         ucMap.addMarker(marker_Library);
         ucMap.addMarker(marker_Hub);
@@ -202,12 +203,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         ucMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
             @Override
             public void onInfoWindowClick(Marker marker) {
-                gotoStreetView();
-                switch (marker){
-                    case newMarker:
-                        gotoStreetView();
-                        break;
-                }
+                Toast toast = Toast.makeText(getApplicationContext(), "Clicked", Toast.LENGTH_SHORT);
+            }
+        });
+
+        ucMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+            @Override
+            public void onMapLongClick(LatLng latLng) {
+
             }
         });
     }
