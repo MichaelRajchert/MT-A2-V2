@@ -175,15 +175,15 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             marker_Peg2.draggable(markerOps.draggable);
             marker_Peg2.flat(markerOps.flat);
 
-        ucMap.addMarker(marker_StudentCenter);
-        ucMap.addMarker(marker_CoffeeGrounds);
-        ucMap.addMarker(marker_Library);
-        ucMap.addMarker(marker_Hub);
-        ucMap.addMarker(marker_Gym);
-        ucMap.addMarker(marker_MainParking);
-        ucMap.addMarker(marker_NATSEM);
-        ucMap.addMarker(marker_Peg1).setTag("allawoonaSt_StreetView");
-        ucMap.addMarker(marker_Peg2).setTag("universityDriveN_StreetView");
+        ucMap.addMarker(marker_StudentCenter).setTag("marker_StudentCenter");
+        ucMap.addMarker(marker_CoffeeGrounds).setTag("marker_CoffeeGrounds");
+        ucMap.addMarker(marker_Library).setTag("marker_Library");
+        ucMap.addMarker(marker_Hub).setTag("marker_Hub");
+        ucMap.addMarker(marker_Gym).setTag("marker_Gym");
+        ucMap.addMarker(marker_MainParking).setTag("marker_MainParking");
+        ucMap.addMarker(marker_NATSEM).setTag("marker_NATSEM");
+        ucMap.addMarker(marker_Peg1).setTag("marker_Peg1");
+        ucMap.addMarker(marker_Peg2).setTag("marker_Peg2");
 
         ucMap.moveCamera(CameraUpdateFactory.newLatLngZoom(locations.UC_StartingLocation, 14.6f));
 
@@ -199,9 +199,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         ucMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
-                if (marker.getTag() == "allawoonaSt_StreetView"){
+                if (marker.getTag() == "marker_Peg1"){
                     gotoStreetView(1);
-                } else if (marker.getTag() == "universityDriveN_StreetView"){
+                } else if (marker.getTag() == "marker_Peg2"){
                     gotoStreetView(2);
                 }
                 return false;
@@ -221,11 +221,46 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                 TextView snippet = (TextView) infoWindow.findViewById(R.id.snippetText);
                 ImageView image = (ImageView) infoWindow.findViewById(R.id.snippetIcon);
 
-
                 title.setText(marker.getTitle());
                 snippet.setText(marker.getSnippet());
-                image.setImageDrawable(getResources().getDrawable(R.mipmap.ic_launcher, getTheme()));
+
+                if (marker.getTag() == "marker_StudentCenter"){image.setImageResource(R.drawable.student_icon);
+                } else if (marker.getTag() == "marker_CoffeeGrounds"){
+                    image.setImageResource(R.drawable.coffee_icon);
+                } else if (marker.getTag() == "marker_Library"){
+                    image.setImageResource(R.drawable.uclibrary_icon);
+                } else if (marker.getTag() == "marker_Hub"){
+                    image.setImageResource(R.drawable.thehub_icon);
+                } else if (marker.getTag() == "marker_Gym"){
+                    image.setImageResource(R.drawable.gym_icon);
+                } else if (marker.getTag() == "marker_MainParking"){
+                    image.setImageResource(R.drawable.parking_icon);
+                } else if (marker.getTag() == "marker_NATSEM"){
+                    image.setImageResource(R.drawable.natsem_icon);
+                }
+
                 return infoWindow;
+            }
+        });
+
+        ucMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                if (marker.getTag() == "marker_StudentCenter"){
+                    gotoWebView("http://www.canberra.edu.au/current-students/canberra-students/student-centre");
+                } else if (marker.getTag() == "marker_CoffeeGrounds"){
+                    gotoWebView("http://www.canberra.edu.au/on-campus/facilities/cooper-lodge");
+                } else if (marker.getTag() == "marker_Library"){
+                    gotoWebView("http://www.canberra.edu.au/library");
+                } else if (marker.getTag() == "marker_Hub"){
+                    gotoWebView("http://www.canberra.edu.au/maps/buildings-directory/the-hub");
+                } else if (marker.getTag() == "marker_Gym"){
+                    gotoWebView("https://www.ucunion.com.au/fitness-centre/");
+                } else if (marker.getTag() == "marker_MainParking"){
+                    gotoWebView("https://www.canberra.edu.au/maps/parking");
+                } else if (marker.getTag() == "marker_NATSEM"){
+                    gotoWebView("http://www.natsem.canberra.edu.au/");
+                }
             }
         });
     }
@@ -233,6 +268,11 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     public void gotoStreetView(int location){
         Intent intent = new Intent(this, StreetView.class);
         intent.putExtra("LOCATION_ID", location);
+        startActivity(intent);
+    }
+    public void gotoWebView(String website){
+        Intent intent = new Intent(this, WebViewActivity.class);
+        intent.putExtra("WEBSITE_URL", website);
         startActivity(intent);
     }
 }

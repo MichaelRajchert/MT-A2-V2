@@ -27,7 +27,8 @@
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyDzaMxlARomjeEHB-rtnMOEVkNvAqAFdWg" />
 
-        <activity android:name=".StreetView"></activity>
+        <activity android:name=".StreetView" />
+        <activity android:name=".WebViewActivity"></activity>
     </application>
 
 </manifest>
