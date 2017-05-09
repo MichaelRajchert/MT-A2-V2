@@ -1,18 +1,14 @@
 package au.edu.canberra.mt_a2_v2;
 
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Switch;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -107,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             marker_StudentCenter.title("UC Student Center");
             marker_StudentCenter.snippet("Your gateway to access support and advice");
             marker_StudentCenter.alpha(markerOps.alpha);
-            marker_StudentCenter.icon(BitmapDescriptorFactory.fromResource(R.drawable.student));
+            marker_StudentCenter.icon(BitmapDescriptorFactory.fromResource(R.drawable.student_marker));
             marker_StudentCenter.draggable(markerOps.draggable);
             marker_StudentCenter.flat(markerOps.flat);
 
@@ -116,7 +112,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             marker_CoffeeGrounds.title("Coffee Grounds");
             marker_CoffeeGrounds.snippet("The Best Coffee on campus, underneath Cooper Lodge.");
             marker_CoffeeGrounds.alpha(markerOps.alpha);
-            marker_CoffeeGrounds.icon(BitmapDescriptorFactory.fromResource(R.drawable.coffee));
+            marker_CoffeeGrounds.icon(BitmapDescriptorFactory.fromResource(R.drawable.coffee_marker));
             marker_CoffeeGrounds.draggable(markerOps.draggable);
             marker_CoffeeGrounds.flat(markerOps.flat);
 
@@ -125,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             marker_Library.title("UC Library");
             marker_Library.snippet("24 Hr access for all students and staff.");
             marker_Library.alpha(markerOps.alpha);
-            marker_Library.icon(BitmapDescriptorFactory.fromResource(R.drawable.uclibrary));
+            marker_Library.icon(BitmapDescriptorFactory.fromResource(R.drawable.uclibrary_marker));
             marker_Library.draggable(markerOps.draggable);
             marker_Library.flat(markerOps.flat);
 
@@ -134,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             marker_Hub.title("The Hub");
             marker_Hub.snippet("Below Concourse level between Building 1 and Building 8.");
             marker_Hub.alpha(markerOps.alpha);
-            marker_Hub.icon(BitmapDescriptorFactory.fromResource(R.drawable.the_hub));
+            marker_Hub.icon(BitmapDescriptorFactory.fromResource(R.drawable.thehub_marker));
             marker_Hub.draggable(markerOps.draggable);
             marker_Hub.flat(markerOps.flat);
 
@@ -143,7 +139,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             marker_Gym.title("UC Gym");
             marker_Gym.snippet("Open to students, staff, and the general public.");
             marker_Gym.alpha(markerOps.alpha);
-            marker_Gym.icon(BitmapDescriptorFactory.fromResource(R.drawable.gym));
+            marker_Gym.icon(BitmapDescriptorFactory.fromResource(R.drawable.gym_marker));
             marker_Gym.draggable(markerOps.draggable);
             marker_Gym.flat(markerOps.flat);
 
@@ -152,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             marker_MainParking.title("Main Parking area");
             marker_MainParking.snippet("Several hundred parks available");
             marker_MainParking.alpha(markerOps.alpha);
-            marker_MainParking.icon(BitmapDescriptorFactory.fromResource(R.drawable.parking));
+            marker_MainParking.icon(BitmapDescriptorFactory.fromResource(R.drawable.parking_marker));
             marker_MainParking.draggable(markerOps.draggable);
             marker_MainParking.flat(markerOps.flat);
 
@@ -161,21 +157,21 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             marker_NATSEM.title("NATSEM Centre");
             marker_NATSEM.snippet("The National Center for Social and Economic Modeling.");
             marker_NATSEM.alpha(markerOps.alpha);
-            marker_NATSEM.icon(BitmapDescriptorFactory.fromResource(R.drawable.natsem));
+            marker_NATSEM.icon(BitmapDescriptorFactory.fromResource(R.drawable.natsem_marker));
             marker_NATSEM.draggable(markerOps.draggable);
             marker_NATSEM.flat(markerOps.flat);
 
         MarkerOptions marker_Peg1 = new MarkerOptions();
             marker_Peg1.position(locations.UC_Peg1);
             marker_Peg1.alpha(markerOps.alpha);
-            marker_Peg1.icon(BitmapDescriptorFactory.fromResource(R.drawable.pegman));
+            marker_Peg1.icon(BitmapDescriptorFactory.fromResource(R.drawable.pegman_marker));
             marker_Peg1.draggable(markerOps.draggable);
             marker_Peg1.flat(markerOps.flat);
 
         MarkerOptions marker_Peg2 = new MarkerOptions();
             marker_Peg2.position(locations.UC_Peg2);
             marker_Peg2.alpha(markerOps.alpha);
-            marker_Peg2.icon(BitmapDescriptorFactory.fromResource(R.drawable.pegman));
+            marker_Peg2.icon(BitmapDescriptorFactory.fromResource(R.drawable.pegman_marker));
             marker_Peg2.draggable(markerOps.draggable);
             marker_Peg2.flat(markerOps.flat);
 
@@ -200,20 +196,41 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
 
-        map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+        ucMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
                 if (marker.getTag() == "allawoonaSt_StreetView"){
-                    gotoStreetView("1");
+                    gotoStreetView(1);
                 } else if (marker.getTag() == "universityDriveN_StreetView"){
-                    gotoStreetView("1");
+                    gotoStreetView(2);
                 }
                 return false;
             }
         });
+
+        ucMap.setInfoWindowAdapter(new GoogleMap.InfoWindowAdapter() {
+            @Override
+            public View getInfoWindow(Marker marker) {
+                return null;
+            }
+
+            @Override
+            public View getInfoContents(Marker marker) {
+                View infoWindow = getLayoutInflater().inflate(R.layout.snippet_text_with_image, null);
+                TextView title = (TextView) infoWindow.findViewById(R.id.snippetTitle);
+                TextView snippet = (TextView) infoWindow.findViewById(R.id.snippetText);
+                ImageView image = (ImageView) infoWindow.findViewById(R.id.snippetIcon);
+
+
+                title.setText(marker.getTitle());
+                snippet.setText(marker.getSnippet());
+                image.setImageDrawable(getResources().getDrawable(R.mipmap.ic_launcher, getTheme()));
+                return infoWindow;
+            }
+        });
     }
 
-    public void gotoStreetView(String location){
+    public void gotoStreetView(int location){
         Intent intent = new Intent(this, StreetView.class);
         intent.putExtra("LOCATION_ID", location);
         startActivity(intent);

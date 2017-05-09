@@ -38,9 +38,9 @@ public class StreetView extends AppCompatActivity implements OnStreetViewPanoram
                 .build();
 
         panorama.animateTo(camera, duration);
-        if (extras.getString("LOCATION_ID") == "1"){
+        if (extras.getInt("LOCATION_ID") == 1){
             panorama.setPosition(locations.UC_Peg1);
-        } else if (extras.getString("LOCATION_ID") == "2"){
+        } else if (extras.getInt("LOCATION_ID") == 2){
             panorama.setPosition(locations.UC_Peg2);
         } else {
             panorama.setPosition(locations.UC_Peg1);
