@@ -186,8 +186,8 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         ucMap.addMarker(marker_Gym);
         ucMap.addMarker(marker_MainParking);
         ucMap.addMarker(marker_NATSEM);
-        ucMap.addMarker(marker_Peg1);
-        ucMap.addMarker(marker_Peg2);
+        ucMap.addMarker(marker_Peg1).setTag("allawoonaSt_StreetView");
+        ucMap.addMarker(marker_Peg2).setTag("universityDriveN_StreetView");
 
         ucMap.moveCamera(CameraUpdateFactory.newLatLngZoom(locations.UC_StartingLocation, 14.6f));
 
@@ -195,27 +195,29 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onPolygonClick(final Polygon polygon) {
                 Toast.makeText(getApplicationContext(), "University of Canberra", Toast.LENGTH_SHORT).show();
-                polygon.setFillColor(Color.argb(70, 200, 13, 0));
-                polygon.setStrokeColor(Color.BLACK);
+                ucArea.fillColor(0x3057a8f9);
+                ucArea.strokeColor(0xffc7d2ff);
             }
         });
 
-        ucMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+        map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
-            public void onInfoWindowClick(Marker marker) {
-                Toast toast = Toast.makeText(getApplicationContext(), "Clicked", Toast.LENGTH_SHORT);
-            }
-        });
-
-        ucMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
-            @Override
-            public void onMapLongClick(LatLng latLng) {
-
+            public boolean onMarkerClick(Marker marker) {
+                if (marker.getTag() == "allawoonaSt_StreetView"){
+                    gotoStreetView("1");
+                } else if (marker.getTag() == "universityDriveN_StreetView"){
+                    gotoStreetView("1");
+                }
+                return false;
             }
         });
     }
 
-    public void gotoStreetView(){startActivity(new Intent(this, StreetView.class));}
+    public void gotoStreetView(String location){
+        Intent intent = new Intent(this, StreetView.class);
+        intent.putExtra("LOCATION_ID", location);
+        startActivity(intent);
+    }
 }
 
 class markerOptions{
