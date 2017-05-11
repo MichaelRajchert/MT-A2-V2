@@ -1,6 +1,7 @@
 package au.edu.canberra.mt_a2_v2;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -191,8 +192,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
             @Override
             public void onPolygonClick(final Polygon polygon) {
                 Toast.makeText(getApplicationContext(), "University of Canberra", Toast.LENGTH_SHORT).show();
-                ucArea.fillColor(0x3057a8f9);
-                ucArea.strokeColor(0xffc7d2ff);
+                polygon.setFillColor(0x434b93f2);
+                polygon.setStrokeColor(0xff006b8e);
+
             }
         });
 
@@ -237,8 +239,9 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
                     image.setImageResource(R.drawable.parking_icon);
                 } else if (marker.getTag() == "marker_NATSEM"){
                     image.setImageResource(R.drawable.natsem_icon);
+                } else if (marker.getTag() == "marker_Peg1" || marker.getTag() == "marker_Peg2"){
+                    return null;
                 }
-
                 return infoWindow;
             }
         });

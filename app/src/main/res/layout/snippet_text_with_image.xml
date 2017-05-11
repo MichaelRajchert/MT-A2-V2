@@ -10,9 +10,9 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:layout_width="50dp"
             android:layout_height="50dp"
-            android:src="@drawable/student_icon"
+            android:layout_width="50dp"
+            android:src="@drawable/uc_icon"
             android:id="@+id/snippetIcon"
             android:layout_weight="1" />
 
